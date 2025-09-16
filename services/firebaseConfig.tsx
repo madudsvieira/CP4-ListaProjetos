@@ -1,25 +1,22 @@
 import { initializeApp } from "firebase/app";
-import { initializeAuth } from "firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getFirestore,collection,addDoc,getDocs,doc,updateDoc,deleteDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBRZe8cuY_U3nXbmy2TlsgcB-EoVpOQySs",
-  authDomain: "listatarefas-41055.firebaseapp.com",
-  projectId: "listatarefas-41055",
-  storageBucket: "listatarefas-41055.firebasestorage.app",
-  messagingSenderId: "942351339389",
-  appId: "1:942351339389:web:135569cacf9c04fbde4614"
+  apiKey: "AIzaSyAzvfPoTdK8TZd9JFxQQy2_JxL2Ct8gUks",
+  authDomain: "listatarefasapp.firebaseapp.com",
+  projectId: "listatarefasapp",
+  storageBucket: "listatarefasapp.appspot.com", 
+  messagingSenderId: "654866984720",
+  appId: "1:654866984720:web:c290fe902e9b7fdf2abf95",
+  measurementId: "G-HV8P0FYDRH"
 };
-
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app)
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
-const auth = getAuth(app)
-export{auth,db,collection,addDoc,getDocs,doc,updateDoc,deleteDoc}
-
-
-
+export { auth, googleProvider, db };
