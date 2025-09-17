@@ -48,12 +48,10 @@ i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
 });
 
-
 export async function mudarIdioma(lang: "pt" | "en") {
   await i18n.changeLanguage(lang);
   await AsyncStorage.setItem("idioma", lang);
 }
-
 
 export async function carregarIdioma() {
   const lang = await AsyncStorage.getItem("idioma");

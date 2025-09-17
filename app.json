@@ -13,20 +13,29 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bianca.listaprojetos"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "package": "com.bianca.listaprojetos",
       "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "extra": {
+      "eas": {
+        "projectId": "654866984720" 
+      },
+      "googleClientId": "218593320365-0kdeqm2cue1201dc7mjdrtnodao8bhd1.apps.googleusercontent.com"
+    },
     "plugins": [
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-localization"
     ]
   }
 }

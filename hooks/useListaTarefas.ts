@@ -13,7 +13,7 @@ import {
 import { getAuth } from "firebase/auth";
 
 type Tarefa = {
-  id?: string;       // 👈 agora é opcional
+  id?: string;       
   titulo: string;
   concluida: boolean;
 };

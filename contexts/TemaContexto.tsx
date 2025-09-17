@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
+import React, { createContext, useState, useEffect } from "react";
+import { Appearance } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type TemaContextoType = {
@@ -12,29 +12,41 @@ export const TemaContexto = createContext<TemaContextoType>({
   alternarTema: () => {},
 });
 
-export function TemaProvider({ children }: { children: ReactNode }) {
+export function TemaProvider({ children }: { children: React.ReactNode }) {
   const [temaEscuro, setTemaEscuro] = useState(false);
 
+  
   useEffect(() => {
     (async () => {
-      const salvo = await AsyncStorage.getItem("tema");
-      if (salvo) {
-        setTemaEscuro(salvo === "escuro");
+      try {
+        const valorSalvo = await AsyncStorage.getItem("tema");
+        if (valorSalvo !== null) {
+          setTemaEscuro(valorSalvo === "escuro");
+        } else {
+        
+          const corSistema = Appearance.getColorScheme();
+          setTemaEscuro(corSistema === "dark");
+        }
+      } catch (error) {
+        console.log("Erro ao carregar tema:", error);
       }
     })();
   }, []);
 
-  const alternarTema = async () => {
-    const novoTema = !temaEscuro;
-    setTemaEscuro(novoTema);
-    await AsyncStorage.setItem("tema", novoTema ? "escuro" : "claro");
-  };
 
-  const tema = temaEscuro ? MD3DarkTheme : MD3LightTheme;
+  const alternarTema = async () => {
+    try {
+      const novoTema = !temaEscuro;
+      setTemaEscuro(novoTema);
+      await AsyncStorage.setItem("tema", novoTema ? "escuro" : "claro");
+    } catch (error) {
+      console.log("Erro ao salvar tema:", error);
+    }
+  };
 
   return (
     <TemaContexto.Provider value={{ temaEscuro, alternarTema }}>
-      <PaperProvider theme={tema}>{children}</PaperProvider>
+      {children}
     </TemaContexto.Provider>
   );
 }

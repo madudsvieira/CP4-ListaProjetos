@@ -1,4 +1,3 @@
-// app/TaskFormScreen.tsx
 import React, { useState, useEffect } from "react";
 import { View, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -6,7 +5,7 @@ import { collection, addDoc, updateDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../services/firebaseConfig";
 import { getAuth } from "firebase/auth";
 
-// ❌ antes importava RootStackParamList, agora usamos any
+
 type Props = NativeStackScreenProps<any, "TaskForm">;
 
 export default function TaskFormScreen({ route, navigation }: Props) {

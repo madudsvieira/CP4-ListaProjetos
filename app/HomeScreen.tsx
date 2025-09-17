@@ -1,48 +1,68 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, FlatList, TouchableOpacity } from "react-native";
-import useListaTarefas from "../hooks/useListaTarefas";
-import useUsuario from "../hooks/useUsuario";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function HomeScreen() {
-  const { tarefas, adicionarTarefa, atualizarTarefa, toggleConcluida, excluirTarefa } = useListaTarefas();
-  const { usuario, logout } = useUsuario();
-  const [novaTarefa, setNovaTarefa] = useState("");
 
-  function handleAdicionar() {
-    if (novaTarefa.trim()) {
-      adicionarTarefa(novaTarefa);
-      setNovaTarefa("");
-    }
-  }
+const resources = {
+  pt: {
+    translation: {
+      login: "Login",
+      email: "Email",
+      senha: "Senha",
+      entrar: "Entrar",
+      criarConta: "Criar conta",
+      sair: "Sair",
+      minhasTarefas: "Minhas Tarefas",
+      titulo: "Título",
+      descricao: "Descrição",
+      adicionarTarefa: "Adicionar Tarefa",
+      pendente: "Pendente",
+      concluida: "Concluída",
+      temaClaro: "Usar Tema Claro",
+      temaEscuro: "Usar Tema Escuro",
+      trocarIdioma: "Trocar Idioma",
+    },
+  },
+  en: {
+    translation: {
+      login: "Login",
+      email: "Email",
+      senha: "Password",
+      entrar: "Sign in",
+      criarConta: "Create account",
+      sair: "Logout",
+      minhasTarefas: "My Tasks",
+      titulo: "Title",
+      descricao: "Description",
+      adicionarTarefa: "Add Task",
+      pendente: "Pending",
+      concluida: "Completed",
+      temaClaro: "Use Light Theme",
+      temaEscuro: "Use Dark Theme",
+      trocarIdioma: "Switch Language",
+    },
+  },
+};
 
-  return (
-    <View style={{ flex: 1, padding: 20 }}>
-      <Text>Bem-vindo, {usuario?.email}</Text>
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "pt", 
+  fallbackLng: "pt",
+  interpolation: { escapeValue: false },
+});
 
-      <TextInput
-        placeholder="Nova tarefa"
-        value={novaTarefa}
-        onChangeText={setNovaTarefa}
-        style={{ borderWidth: 1, marginVertical: 10, padding: 8 }}
-      />
-      <Button title="Adicionar" onPress={handleAdicionar} />
 
-      <FlatList
-        data={tarefas}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 5 }}>
-            <TouchableOpacity onPress={() => toggleConcluida(item.id, item.concluida)}>
-              <Text style={{ textDecorationLine: item.concluida ? "line-through" : "none" }}>
-                {item.titulo}
-              </Text>
-            </TouchableOpacity>
-            <Button title="Excluir" onPress={() => excluirTarefa(item.id)} />
-          </View>
-        )}
-      />
-
-      <Button title="Sair" onPress={logout} color="red" />
-    </View>
-  );
+export async function mudarIdioma(lang: "pt" | "en") {
+  await i18n.changeLanguage(lang);
+  await AsyncStorage.setItem("idioma", lang);
 }
+
+
+export async function carregarIdioma() {
+  const lang = await AsyncStorage.getItem("idioma");
+  if (lang) {
+    await i18n.changeLanguage(lang);
+  }
+}
+
+export default i18n;

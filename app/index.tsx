@@ -1,4 +1,3 @@
-// app/index.tsx
 import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -12,7 +11,7 @@ import TaskFormScreen from "./TaskFormScreen";
 import { UsuarioContexto } from "../contexts/UsuarioContexto";
 import { TemaContexto } from "../contexts/TemaContexto";
 
-// 👇 força para any, ignorando tipagem de rotas
+
 const Stack: any = createNativeStackNavigator();
 
 function Rotas() {
@@ -29,17 +28,32 @@ function Rotas() {
 
   return (
     <NavigationContainer>
-      {/* 👇 se ainda der erro de TS, ignora aqui */}
-      {/* @ts-ignore */}
+  
       <Stack.Navigator>
         {usuario ? (
           <>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="TaskForm" component={TaskFormScreen} />
-            <Stack.Screen name="AlterarSenha" component={AlterarSenhaScreen} />
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ title: "Início" }}
+            />
+            <Stack.Screen
+              name="TaskForm"
+              component={TaskFormScreen}
+              options={{ title: "Tarefas" }}
+            />
+            <Stack.Screen
+              name="AlterarSenha"
+              component={AlterarSenhaScreen}
+              options={{ title: "Alterar Senha" }}
+            />
           </>
         ) : (
-          <Stack.Screen name="Cadastrar" component={CadastrarScreen} />
+          <Stack.Screen
+            name="Cadastrar"
+            component={CadastrarScreen}
+            options={{ title: "Login / Cadastro" }}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>
