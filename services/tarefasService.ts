@@ -14,7 +14,7 @@ import { db } from "./firebaseConfig";
 import { auth } from "./firebaseConfig";
 
 export type Tarefa = {
-  id?: string;
+  id?: string;       // 👈 já era opcional, mantemos assim
   title: string;
   description: string;
   completed: boolean;
@@ -29,7 +29,9 @@ function getUserTasksCollection() {
   return collection(db, "usuarios", user.uid, "tarefas");
 }
 
-export async function criarTarefa(tarefa: Omit<Tarefa, "id" | "createdAt" | "updatedAt">) {
+export async function criarTarefa(
+  tarefa: Omit<Tarefa, "id" | "createdAt" | "updatedAt">
+) {
   const tarefasRef = getUserTasksCollection();
   const now = Timestamp.now();
 
@@ -54,7 +56,6 @@ export function observarTarefas(callback: (tarefas: Tarefa[]) => void) {
     callback(lista);
   });
 }
-
 
 export async function atualizarTarefa(id: string, dados: Partial<Tarefa>) {
   const tarefaRef = doc(getUserTasksCollection(), id);

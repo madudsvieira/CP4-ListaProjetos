@@ -13,7 +13,7 @@ import {
 import { getAuth } from "firebase/auth";
 
 type Tarefa = {
-  id: string;
+  id?: string;       // 👈 agora é opcional
   titulo: string;
   concluida: boolean;
 };
@@ -66,7 +66,6 @@ export default function useListaTarefas() {
     const tarefaRef = doc(db, "usuarios", usuario.uid, "tarefas", id);
     await updateDoc(tarefaRef, { concluida: !concluida });
   }
-
 
   async function excluirTarefa(id: string) {
     if (!usuario) return;

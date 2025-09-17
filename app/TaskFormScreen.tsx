@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { View, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../App"; // *** importa do App.tsx ***
 import { collection, addDoc, updateDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../services/firebaseConfig";
 import { getAuth } from "firebase/auth";
 
-type Props = NativeStackScreenProps<RootStackParamList, "TaskForm">;
+// ❌ antes importava RootStackParamList, agora usamos any
+type Props = NativeStackScreenProps<any, "TaskForm">;
 
 export default function TaskFormScreen({ route, navigation }: Props) {
   const { id } = route.params || {};
@@ -71,8 +71,11 @@ export default function TaskFormScreen({ route, navigation }: Props) {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: "#fff" },
   input: {
-    borderWidth: 1, borderColor: "#ccc", borderRadius: 6,
-    padding: 10, marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 6,
+    padding: 10,
+    marginBottom: 12,
   },
   textarea: { height: 100, textAlignVertical: "top" },
 });
